@@ -4,12 +4,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import "./App.css";
 import capsule_1 from "./assets/capsule.png";
+import { API_value } from "./App_data_api";
 
 function App() {
-  let items = ["Hyderabad", "Bangalore", "Chennai"];
   const handleSelectItem = (item: string) => {
     console.log(item);
   };
+  const introduction = API_value("introduction");
+  const quickNote = API_value("quick_note");
   return (
     <div>
       {/* HEADER */}
@@ -31,19 +33,11 @@ function App() {
           <div className="row content">
             <div className="intro-card-fluid shadow">
               <h4 className="text-center fw-bold">Hi Everyone!</h4>
-              <p className="text-center">
-                I created this website to share all the knowledge I'm gaining as
-                I learn new things. I'm just starting my journey in the
-                pharmaceutical industry, so I want to document what I discover
-                along the way.
-              </p>
+              <p className="text-center">{introduction ?? "Loading..."}</p>
 
               <div className="text-center">
                 <span className="quick-note">
-                  <b>A QUICK NOTE:</b> I'm still learning, so if you spot any
-                  mistakes or have corrections, please feel free to give me
-                  feedback! I believe we can all learn together, and your input
-                  will help me improve.
+                  <b>A QUICK NOTE:</b> {quickNote ?? "Loading..."}
                 </span>
               </div>
 
