@@ -1,3 +1,11 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 body {
     background-color: #fdf5f0;
     font-family: Arial, sans-serif;
@@ -20,10 +28,29 @@ body {
     rotate: 30deg;
     opacity: 0.5;
 }
+.capsule_2{
+    
+    position: absolute;
+    width: 40%;
+    margin-left: 70%;
+    margin-top: 20%;
+    z-index: 1;
+    rotate: 30deg;
+    opacity: 0.5;
+}
+.round_tablet_1{
+    position: absolute;
+    width: 10%;
+    margin-left: 93%;
+    margin-top: -1.3%;
+    z-index: 2;
+    rotate: 30deg;
+    opacity: 0.5;
+}
 .header_content{
     position: relative;
     --bs-gutter-x: 0rem;
-    margin: 0%;
+    margin-top : -1%;
     display: flex;
     flex-direction: column; 
 }
@@ -69,7 +96,7 @@ body {
 .intro-card-fluid {
     background-color: white;
     padding: 1rem;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 80%;
     /*margin-top: -rem;*/
     /* negative margin to pull it over the gold bar */
@@ -79,12 +106,44 @@ body {
     margin-bottom: 1rem;
 }
 .quick-note {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 50px;
-    padding: 0.5rem 1rem;
-    display: inline-block;
-    margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  background-color: #ffecec;
+  padding: 20px;
+  margin-bottom:1.5vw;
+  width: 100%;
+border-radius: 3vw 0vw 0vw 3vw;
 }
+
+.quick-note-label {
+  flex: 0 0 auto; /* don’t stretch, keep on the left */
+  font-weight: bold;
+}
+
+.quick-note-text {
+  flex: 1;              /* take the remaining space */
+  text-align: center;   /* center text horizontally */
+}
+
+.drug_introduction{
+    position: relative;
+    margin-top: 1px;
+    padding: 1.3vw;
+}
+.drug-image-float {
+  float: right;
+  width: 35%;
+  height: auto;
+  margin-top: 2vw;     /* <-- pushes image down */
+  margin-left: 1.2rem;
+  margin-bottom: 1rem;
+
+  shape-outside: ellipse(30% 60% at 40% 60%);
+  clip-path: ellipse(100% 70% at 80% 60%);
+  -webkit-shape-outside: ellipse(30% 60% at 40% 60%);
+  -webkit-clip-path: ellipse(100% 70% at 80% 60%);
+}
+
 
 @media (max-width: 600px) {
     body {
@@ -98,4 +157,14 @@ body {
     font-weight: 400;
     margin-bottom:0.5%;
 }
+}
+@media (max-width: 768px) {
+  .drug-image-float {
+    float: none;
+    display: block;
+    margin: 1rem auto;
+    width:35%;
+    shape-outside: none;
+    clip-path: none;
+  }
 }
