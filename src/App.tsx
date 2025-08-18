@@ -14,6 +14,7 @@ import drug_intro_image from "./assets/drug_intro_image.png";
 import { useState, useEffect, useCallback } from "react";
 import Divider from "@mui/material/Divider";
 import { Chip } from "@mui/material";
+import MarkdownWithTooltips from "./tooltip";
 
 function App() {
   const {
@@ -46,6 +47,7 @@ function App() {
       fetchDrugClass(["drug_class", "drug_family", "patent_generic"]);
     }
   }, [introLoading, intro_and_drugs]);
+
   return (
     <div>
       {/* HEADER */}
@@ -109,9 +111,9 @@ function App() {
                       alt="API and Excipients division"
                       className="drug-image-float"
                     />
-                    <ReactMarkdown>
-                      {intro_and_drugs.drug_introduction_2 ?? ""}
-                    </ReactMarkdown>
+                    <MarkdownWithTooltips
+                      content={intro_and_drugs.drug_introduction_2 ?? ""}
+                    />
                     <ReactMarkdown>
                       {intro_and_drugs.drug_introduction_3 ?? ""}
                     </ReactMarkdown>
