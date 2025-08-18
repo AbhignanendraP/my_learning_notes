@@ -4,20 +4,48 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import "./App.css";
 import capsule_1 from "./assets/capsule.png";
+import drug from "./assets/capsule.png";
 import round_tablet_1 from "./assets/round_table_1.png";
-import { API_value } from "./App_data_api";
+import { useAPIValue } from "./App_data_api";
 import ReactMarkdown from "react-markdown";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import drug_intro_image from "./assets/drug_intro_image.png";
+import { useState, useEffect, useCallback } from "react";
+import Divider from "@mui/material/Divider";
+import { Chip } from "@mui/material";
 
 function App() {
-  const handleSelectItem = (item: string) => {
-    console.log(item);
-  };
-  const introduction = API_value("introduction");
-  const quickNote = API_value("quick_note");
-  const drug_introduction = API_value("drug_introduction");
+  const {
+    value: intro_and_drugs,
+    fetchContent: fetchIntroAndDrugs,
+    loading: introLoading,
+  } = useAPIValue([]);
+
+  // Second fetch group (starts empty)
+  const {
+    value: drugClass,
+    fetchContent: fetchDrugClass,
+    loading: drugClassLoading,
+  } = useAPIValue([]);
+
+  // Step 1: fetch first batch on mount
+  useEffect(() => {
+    fetchIntroAndDrugs([
+      "introduction",
+      "quick_note",
+      "drug_introduction_1",
+      "drug_introduction_2",
+      "drug_introduction_3",
+    ]);
+  }, []);
+
+  // Step 2: once first batch is done, fetch drug_class
+  useEffect(() => {
+    if (!introLoading && Object.keys(intro_and_drugs).length > 0) {
+      fetchDrugClass(["drug_class", "drug_family", "patent_generic"]);
+    }
+  }, [introLoading, intro_and_drugs]);
   return (
     <div>
       {/* HEADER */}
@@ -53,14 +81,14 @@ function App() {
           {/* CONTENT (floating card) */}
           <div className="row content">
             <div className="intro-card-fluid">
-              {drug_introduction ? (
+              {!introLoading ? (
                 <>
                   <h4 className="text-center fw-bold">Hi Everyone!</h4>
-                  <p className="text-center">{introduction}</p>
+                  <p className="text-center">{intro_and_drugs.introduction}</p>
 
                   <div className="quick-note">
                     <b className="me-2">A QUICK NOTE:</b>
-                    <p className="mb-0">{quickNote}</p>
+                    <p className="mb-0">{intro_and_drugs.quick_note}</p>
                   </div>
 
                   <p className="text-center">
@@ -72,13 +100,25 @@ function App() {
                     className="text drug_introduction"
                     style={{ whiteSpace: "pre-wrap" }}
                   >
+                    <img src={drug} alt="Drug" className="drug" />
+                    <ReactMarkdown>
+                      {intro_and_drugs.drug_introduction_1 ?? ""}
+                    </ReactMarkdown>
                     <img
                       src={drug_intro_image}
                       alt="API and Excipients division"
                       className="drug-image-float"
                     />
-                    <ReactMarkdown>{drug_introduction ?? ""}</ReactMarkdown>
+                    <ReactMarkdown>
+                      {intro_and_drugs.drug_introduction_2 ?? ""}
+                    </ReactMarkdown>
+                    <ReactMarkdown>
+                      {intro_and_drugs.drug_introduction_3 ?? ""}
+                    </ReactMarkdown>
                   </div>
+                  <Divider variant="middle" textAlign="left">
+                    <b>Drug Division</b>
+                  </Divider>
                 </>
               ) : (
                 <Stack spacing={1}>
@@ -102,8 +142,47 @@ function App() {
                   />
                 </Stack>
               )}
+
+              {!drugClassLoading ? (
+                <>
+                  <div
+                    className="text drug_class_family_patent"
+                    style={{ whiteSpace: "pre-wrap" }}
+                  >
+                    <ReactMarkdown>{drugClass.drug_class ?? ""}</ReactMarkdown>
+                    <ReactMarkdown>{drugClass.drug_family ?? ""}</ReactMarkdown>
+                    <ReactMarkdown>
+                      {drugClass.patent_generic ?? ""}
+                    </ReactMarkdown>
+                  </div>
+                </>
+              ) : (
+                <Stack spacing={1}>
+                  <Skeleton
+                    variant="rounded"
+                    animation="wave"
+                    width={"100%"}
+                    height={"10vw"}
+                  />
+                  <Skeleton
+                    variant="rounded"
+                    animation="wave"
+                    width={"100%"}
+                    height={"10vw"}
+                  />
+                  <Skeleton
+                    variant="rounded"
+                    animation="wave"
+                    width={"100%"}
+                    height={"10vw"}
+                  />
+                </Stack>
+              )}
             </div>
           </div>
+        </div>
+        <div>
+          <p></p>
         </div>
       </div>
     </div>

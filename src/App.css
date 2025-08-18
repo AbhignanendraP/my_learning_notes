@@ -130,6 +130,12 @@ border-radius: 3vw 0vw 0vw 3vw;
     margin-top: 1px;
     padding: 1.3vw;
 }
+.drug_class_family_patent {
+    position: relative;
+    margin-top: 1px;
+    padding: 1.3vw;
+}
+
 .drug-image-float {
   float: right;
   width: 35%;
@@ -137,6 +143,20 @@ border-radius: 3vw 0vw 0vw 3vw;
   margin-top: 2vw;     /* <-- pushes image down */
   margin-left: 1.2rem;
   margin-bottom: 1rem;
+
+  shape-outside: ellipse(30% 60% at 40% 60%);
+  clip-path: ellipse(100% 70% at 80% 60%);
+  -webkit-shape-outside: ellipse(30% 60% at 40% 60%);
+  -webkit-clip-path: ellipse(100% 70% at 80% 60%);
+}
+.drug {
+  float: left;
+  width: 8%;
+  height: auto;    /* <-- pushes image down */
+  margin-top: 0.7vw;
+  margin-left: -2vw;
+  margin-right: 2vw;
+  margin-bottom: 0.5vw;
 
   shape-outside: ellipse(30% 60% at 40% 60%);
   clip-path: ellipse(100% 70% at 80% 60%);
@@ -163,7 +183,7 @@ border-radius: 3vw 0vw 0vw 3vw;
     float: none;
     display: block;
     margin: 1rem auto;
-    width:35%;
+    width:45%;
     shape-outside: none;
     clip-path: none;
   }
